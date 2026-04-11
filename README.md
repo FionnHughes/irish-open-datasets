@@ -1,39 +1,24 @@
-# Irish Open Datasets
+# Irish & EU Open Datasets
 
-Python scripts that collect and clean Irish public data into 
-analysis-ready flat files.
+Publicly available data that's hard to access — cleaned, flattened and analysis-ready.
 
-All datasets are free on Kaggle and Hugging Face.
+Each dataset is free on Kaggle. Scripts are here if you want to run your own updates or see how the data was collected.
 
-## Datasets
+| Dataset | Rows | Updated | Kaggle | Notebook | Hugging Face |
+|---------|------|---------|--------|----------|--------------|
+| Irish Property Price Register | 778k | Monthly | [Kaggle](https://www.kaggle.com/datasets/fionnhughes/property-price-register) | [Notebook](https://www.kaggle.com/code/fionnhughes/irish-property-price-analysis) | [Hugging Face](https://huggingface.co/datasets/FionnHughes/irish-property-price-register) |
+| EU Weekly Oil Bulletin | 106k | Weekly | [Kaggle](https://www.kaggle.com/datasets/fionnhughes/eu-oil-bulletin) | [Notebook](https://www.kaggle.com/code/fionnhughes/eu-weekly-oil-bulletin) | [Hugging Face](https://huggingface.co/datasets/FionnHughes/eu-weekly-oil-bulletin) |
 
-| # | Dataset | Kaggle | Hugging Face |
-|---|---------|--------|--------------|
-| 1 | Property Price Register | [Kaggle](https://www.kaggle.com/datasets/fionnhughes/property-price-register) | [HF](https://huggingface.co/datasets/FionnHughes/irish-property-price-register) |
-| 2 | EP Voting Records | coming soon | coming soon |
-| 3 | CSO Ireland Stats | coming soon | coming soon |
-| 4 | Planning Applications | coming soon | coming soon |
-| 5 | Charities Register | coming soon | coming soon |
-| 6 | CRO Companies | coming soon | coming soon |
-| 7 | FSAI Enforcement | coming soon | coming soon |
-| 8 | RTB Rent Index | coming soon | coming soon |
+## About
 
-## Scripts
+First-year Computer Science student based in Dublin. I build datasets from Irish and European government sources that are publicly available but poorly accessible — scattered across PDFs, messy Excel files, or buried behind pagination with no bulk download.
 
-| Script | Dataset |
-|--------|---------|
-| 01_property_price_register.py | Property Price Register |
-| 02_ep_voting_records.py | European Parliament votes |
-| 03_cso_ireland_stats.py | CSO Ireland stats |
-| 04_planning_applications.py | Planning applications |
-| 05_charities_register.py | Charities register |
-| 06_cro_companies.py | CRO companies |
-| 07_fsai_enforcement.py | FSAI enforcement |
-| 08_rtb_rent_index.py | RTB rent index |
+Everything is cleaned and analysis-ready. Scripts are here if you want to run your own updates.
 
-## Requirements
-pip install requests pandas pyarrow openpyxl pdfplumber
+## Structure
 
-## Licence
-Scripts: MIT  
-Data: CC BY 4.0 (see individual dataset pages for source licences)
+```
+datasets/          — one folder per dataset, script + README
+notebooks/         — analysis notebooks
+utils/             — shared scripts
+```
