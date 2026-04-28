@@ -27,13 +27,13 @@ jobs:
         run: python 01_property_price_register.py
 
       - name: Push to Kaggle
-        # bumps the live kaggle dataset to a new version
-        # -d deletes the old files first so we don't pile up stale csvs alongside the new ones
+        # bumps the live kaggle dataset to a new version, keeping old versions intact
+        # so notebooks pinned to a specific version don't break
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
         working-directory: datasets/01_property_price_register/output/property_price_register
-        run: kaggle datasets version -m "monthly update $(date -u +%Y-%m-%d)" -d
+        run: kaggle datasets version -m "monthly update $(date -u +%Y-%m-%d)"
 
       - name: Push to Hugging Face
         # uploads the whole output folder, skipping the kaggle-only metadata file

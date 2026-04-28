@@ -35,7 +35,7 @@ jobs:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
         working-directory: datasets/02_eu_oil_bulletin/output/eu_oil_bulletin
-        run: kaggle datasets version -m "weekly update $(date -u +%Y-%m-%d)" -d
+        run: kaggle datasets version -m "weekly update $(date -u +%Y-%m-%d)"
 
       - name: Push to Hugging Face
         env:
