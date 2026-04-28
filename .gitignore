@@ -1,0 +1,44 @@
+# data files - we publish to kaggle and hugging face, not git
+*.csv
+*.parquet
+*.xlsx
+*.json
+
+# but track dataset-metadata.json (kaggle needs it in the repo)
+!**/dataset-metadata.json
+
+# PyCharm / IntelliJ
+.idea/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code (bonus)
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.env
+.venv
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
