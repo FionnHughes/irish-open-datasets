@@ -1,0 +1,63 @@
+name: Update Property Price Register
+
+on:
+  schedule:
+    # 1st of the month, 3am UTC
+    - cron: "0 3 1 * *"
+  workflow_dispatch:  # also lets me trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install requests pandas pyarrow openpyxl
+
+      - name: Run scraper
+        working-directory: datasets/01_property_price_register
+        run: python 01_property_price_register.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f datasets/01_property_price_register/output/
+          git diff --staged --quiet || git commit -m "update PPR data $(date -u +%Y-%m-%d)"
+          git push
+
+      # kaggle push - needs KAGGLE_USERNAME and KAGGLE_KEY in repo secrets,
+      # plus a dataset-metadata.json in the output folder (kaggle datasets init -p . makes one)
+      #
+      # - name: Push to Kaggle
+      #   env:
+      #     KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      #     KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      #   run: |
+      #     pip install kaggle
+      #     cd datasets/01_property_price_register/output/property_price_register
+      #     kaggle datasets version -m "monthly update $(date -u +%Y-%m-%d)" -d
+
+      # hugging face push - needs HF_TOKEN in repo secrets (write-scoped, from huggingface.co/settings/tokens)
+      #
+      # - name: Push to Hugging Face
+      #   env:
+      #     HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      #   run: |
+      #     pip install huggingface_hub
+      #     huggingface-cli upload FionnHughes/irish-property-price-register \
+      #       datasets/01_property_price_register/output/property_price_register \
+      #       --repo-type dataset \
+      #       --commit-message "monthly update $(date -u +%Y-%m-%d)" \
+      #       --token "$HF_TOKEN"

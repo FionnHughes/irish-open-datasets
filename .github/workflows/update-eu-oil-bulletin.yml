@@ -1,0 +1,66 @@
+name: Update EU Oil Bulletin
+
+on:
+  schedule:
+    # every wednesday at 14:00 utc, bulletin drops wednesdays
+    - cron: "0 14 * * 3"
+  workflow_dispatch:  # also lets me trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install requests pandas pyarrow openpyxl
+
+      - name: Wipe old CSV so the script re-downloads
+        # script bails out early if the csv is already there, so kill it first
+        run: rm -f datasets/02_eu_oil_bulletin/output/eu_oil_bulletin/eu_oil_bulletin.csv
+
+      - name: Run scraper
+        working-directory: datasets/02_eu_oil_bulletin
+        run: python 02_eu_oil_bulletin.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f datasets/02_eu_oil_bulletin/output/
+          git diff --staged --quiet || git commit -m "update EU oil bulletin $(date -u +%Y-%m-%d)"
+          git push
+
+      # kaggle push - same setup as the ppr workflow (secrets + dataset-metadata.json in the output folder)
+      #
+      # - name: Push to Kaggle
+      #   env:
+      #     KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      #     KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      #   run: |
+      #     pip install kaggle
+      #     cd datasets/02_eu_oil_bulletin/output/eu_oil_bulletin
+      #     kaggle datasets version -m "weekly update $(date -u +%Y-%m-%d)" -d
+
+      # hugging face push - same setup as the ppr workflow
+      #
+      # - name: Push to Hugging Face
+      #   env:
+      #     HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      #   run: |
+      #     pip install huggingface_hub
+      #     huggingface-cli upload FionnHughes/eu-weekly-oil-bulletin \
+      #       datasets/02_eu_oil_bulletin/output/eu_oil_bulletin \
+      #       --repo-type dataset \
+      #       --commit-message "weekly update $(date -u +%Y-%m-%d)" \
+      #       --token "$HF_TOKEN"
