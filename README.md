@@ -8,7 +8,7 @@ Each dataset is free on Kaggle. Scripts are here if you want to run your own upd
 |---------|------|---------|--------|----------|--------------|
 | Irish Property Price Register | 778k | Monthly | [Kaggle](https://www.kaggle.com/datasets/fionnhughes/property-price-register) | [Notebook](https://www.kaggle.com/code/fionnhughes/irish-property-price-analysis) | [Hugging Face](https://huggingface.co/datasets/FionnHughes/irish-property-price-register) |
 | EU Weekly Oil Bulletin | 106k | Weekly | [Kaggle](https://www.kaggle.com/datasets/fionnhughes/eu-oil-bulletin) | [Notebook](https://www.kaggle.com/code/fionnhughes/eu-weekly-oil-bulletin) | [Hugging Face](https://huggingface.co/datasets/FionnHughes/eu-weekly-oil-bulletin) |
-| Irish Building Energy Ratings | 1.4M | Monthly | [Kaggle](https://www.kaggle.com/datasets/fionnhughes/irish-building-energy-ratings) | [Notebook](https://www.kaggle.com/code/fionnhughes/irish-building-energy-ratings) | [Hugging Face](https://huggingface.co/datasets/FionnHughes/irish-building-energy-ratings) |
+| Irish Building Energy Ratings | 1.4M | Monthly | [Kaggle](https://www.kaggle.com/datasets/fionnhughes/irish-building-energy-ratings) | [Notebook](https://www.kaggle.com/code/fionnhughes/irish-building-energy-ratings-analysis) | [Hugging Face](https://huggingface.co/datasets/FionnHughes/irish-building-energy-ratings) |
 
 ## About
 

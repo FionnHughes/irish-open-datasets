@@ -9,7 +9,7 @@ Every BER assessment ever issued in Ireland - energy ratings, fuel types, constr
 | **Source** | SEAI National BER Research Tool |
 | **Licence** | CC BY 4.0 - free reuse with attribution |
 | **Kaggle** | [Link](https://www.kaggle.com/datasets/fionnhughes/irish-building-energy-ratings) |
-| **Notebook** | [Link](https://www.kaggle.com/code/fionnhughes/irish-building-energy-ratings) |
+| **Notebook** | [Link](https://www.kaggle.com/code/fionnhughes/irish-building-energy-ratings-analysis) |
 | **Hugging Face** | [Link](https://huggingface.co/datasets/FionnHughes/irish-building-energy-ratings) |
 
 ## Notes
