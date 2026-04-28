@@ -1,0 +1,47 @@
+name: Update Building Energy Ratings
+
+on:
+  schedule:
+    # 1st of the month, 03:00 UTC (same slot as PPR)
+    - cron: "0 3 1 * *"
+  workflow_dispatch:  # also lets me trigger it manually from the Actions tab
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt kaggle huggingface_hub
+
+      - name: Run scraper
+        working-directory: datasets/03_building_energy_ratings
+        run: python 03_building_energy_ratings.py
+
+      - name: Push to Kaggle
+        # bumps the live kaggle dataset to a new version, keeping old versions intact
+        # so notebooks pinned to a specific version don't break
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        working-directory: datasets/03_building_energy_ratings/output/building_energy_ratings
+        run: kaggle datasets version -m "monthly update $(date -u +%Y-%m-%d)"
+
+      - name: Push to Hugging Face
+        # uploads the whole output folder, skipping the kaggle-only metadata file
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          hf upload FionnHughes/irish-building-energy-ratings \
+            datasets/03_building_energy_ratings/output/building_energy_ratings \
+            --repo-type dataset \
+            --exclude dataset-metadata.json \
+            --commit-message "monthly update $(date -u +%Y-%m-%d)"
