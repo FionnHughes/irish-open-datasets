@@ -40,7 +40,7 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          huggingface-cli upload FionnHughes/irish-property-price-register \
+          hf upload FionnHughes/irish-property-price-register \
             datasets/01_property_price_register/output/property_price_register \
             --repo-type dataset \
             --exclude dataset-metadata.json \
