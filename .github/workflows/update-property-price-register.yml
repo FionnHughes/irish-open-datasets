@@ -15,15 +15,15 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
 
       - name: Install dependencies
-        run: pip install requests pandas pyarrow openpyxl
+        run: pip install -r requirements.txt
 
       - name: Run scraper
         working-directory: datasets/01_property_price_register
